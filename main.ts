@@ -1,58 +1,46 @@
-const resumeForm = document.getElementById('resumeform') as HTMLInputElement | null;
-const resumeOutput = document.getElementById('resumeOutput') as HTMLInputElement | null;
+// Accessing the form and the resume output area
+const resumeForm = document.getElementById('resumeForm') as HTMLFormElement | null;
+const resumeOutput = document.getElementById('generatedResume') as HTMLDivElement | null;
 
-function generateResume(data: {
-    name: string;
-    email: string;
-    education: string;
-    skills: string;
-    experience: string;
-    description: string;
-}) {
-    console.log(data);  // Check the data being passed
-    return `
-        <h2>Generate Resume</h2>
-        <p><strong>Name:</strong> ${data.name}</p>
-        <p><strong>Email:</strong> ${data.email}</p>
-        <p><strong>Education:</strong> ${data.education}</p>
-        <p><strong>Experience:</strong> ${data.experience}</p>
-        <p><strong>Skills:</strong> ${data.skills}</p>
-        <p><strong>Description:</strong> ${data.description}</p>
-        <button id="editResume">Edit Resume</button>
-    `;
-}
-
+// Check if the elements exist before proceeding
 if (resumeForm && resumeOutput) {
-    resumeForm.addEventListener('submit', (event) => {
-        console.log('Form submitted');  // Debugging log
-        event.preventDefault();
+    // Event listener for form submission
+    resumeForm.addEventListener('submit', function(event: Event) {
+        event.preventDefault(); // Prevent the page from refreshing on form submission
 
+        // Gathering input values from the form
         const name = (document.getElementById('name') as HTMLInputElement).value;
         const email = (document.getElementById('email') as HTMLInputElement).value;
+        const phone = (document.getElementById('phone') as HTMLInputElement).value;
         const education = (document.getElementById('education') as HTMLInputElement).value;
         const experience = (document.getElementById('experience') as HTMLInputElement).value;
         const skills = (document.getElementById('skills') as HTMLInputElement).value;
         const description = (document.getElementById('description') as HTMLInputElement).value;
 
-        if (resumeOutput) {
-            resumeOutput.innerHTML = generateResume({ name, email, education, experience, skills, description });
-            console.log(resumeOutput.innerHTML);  // Check if the output is updating
-        }
+        // Building the resume output dynamically
+        const resumeContent = `
+            <h3>Personal Information</h3>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Phone:</strong> ${phone}</p>
 
-        const editButton = document.getElementById('editResume') as HTMLButtonElement;
-        if (editButton) {
-            editButton.addEventListener('click', () => {
-                (document.getElementById('name') as HTMLInputElement).value = name;
-                (document.getElementById('email') as HTMLInputElement).value = email;
-                (document.getElementById('education') as HTMLInputElement).value = education;
-                (document.getElementById('experience') as HTMLInputElement).value = experience;
-                (document.getElementById('skills') as HTMLInputElement).value = skills;
-                (document.getElementById('description') as HTMLInputElement).value = description;
+            <h3>Education</h3>
+            <p>${education}</p>
 
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        }
+            <h3>Work Experience</h3>
+            <p>${experience}</p>
+
+            <h3>Skills</h3>
+            <p>${skills}</p>
+
+            <h3>Description</h3>
+            <p>${description}</p>
+        `;
+
+        // Inserting the generated resume into the resumeOutput div
+        resumeOutput.innerHTML = resumeContent;
     });
 } else {
-    console.log('Form or output div not found in the DOM.');
+    console.error('Form or output div not found.');
 }
+

@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editable and Dynamic Resume Builder</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Resume Builder</title>
 </head>
 <body>
+
+    <!-- The form to gather input -->
     <form id="resumeForm">
         <h2>Personal Information</h2>
         <label for="name">Name:</label>
@@ -37,8 +38,10 @@
         <button type="submit">Generate Resume</button>
     </form>
 
-    <div id="resumeOutput"></div>
+    <!-- Output section for the generated resume -->
+    <div id="generatedResume"></div>
 
     <script src="main.js"></script>
+
 </body>
 </html>
